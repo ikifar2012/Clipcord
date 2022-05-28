@@ -12,21 +12,21 @@ webhookurl = os.getenv("WEBHOOKURL")
 
 
 def create_clip():
-    r = requests.post(
+    web_request = requests.post(
         "https://api.twitch.tv/helix/clips?broadcaster_id=" + broadcasterid,
         headers={"Authorization": "Bearer " + token, "Client-ID": clientid},
     )
     sleep(5)
-    return json.loads(r.text).get("data")[0].get("id")
+    return json.loads(web_request.text).get("data")[0].get("id")
 
 
 def get_clip(clip_id):
     clip_id = str(clip_id)
-    r = requests.get(
+    web_request = requests.get(
         "https://api.twitch.tv/helix/clips?id=" + clip_id,
         headers={"Authorization": "Bearer " + token, "Client-ID": clientid},
     )
-    return json.loads(r.text)
+    return json.loads(web_request.text)
 
 
 def create_embed(clip_id):
@@ -35,7 +35,7 @@ def create_embed(clip_id):
     cliptimestamp = str(clip.get("data")[0].get("created_at"))
     clipurl = str(clip.get("data")[0].get("url"))
     cliptitle = str(clip.get("data")[0].get("title"))
-    r = requests.post(
+    web_request = requests.post(
         webhookurl,
         data=json.dumps(
             {
@@ -54,7 +54,7 @@ def create_embed(clip_id):
         ),
         headers={"Content-Type": "application/json"},
     )
-    return r.text
+    return web_request.text
 
 
 clip_id = str(create_clip())
