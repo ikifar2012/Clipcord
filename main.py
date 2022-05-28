@@ -1,7 +1,7 @@
+import os
 import json
 from time import sleep
 import requests
-import os
 import dotenv
 dotenv.load_dotenv()
 clientid = os.getenv('CLIENTID')
